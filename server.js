@@ -10,7 +10,10 @@ app.get('/pornstars/:page', (req, res) => {
      let page = req.params.page || 1
      
      pornhub(page)
-          .then(result => res.send(result))
+          .then(result => res.send({
+               page : page,
+               data: result
+          }))
           .catch(e => console.log(e))
 });
 
