@@ -1,10 +1,12 @@
 const express = require('express')
-const app = express()
+const PornHub = require('./modules/Pornhub')
+const Util = require('./modules/Util')
 
+const app = express()
+const portal = new PornHub();
 const port = process.env.PORT || 1338
 
 const pornhub = require('./modules/pornhub')
-const xnxx = require('./modules/xnxx')
 
 app.get('/pornstars/:page', (req, res) => {
      let page = req.params.page || 1
@@ -17,9 +19,31 @@ app.get('/pornstars/:page', (req, res) => {
           .catch(e => console.log(e))
 });
 
-app.get('/xnxx/hits', (req, res) => {
-     xnxx("").then(result => res.send(result))
-          .catch(e => res.status(500).send({message : "Shut the fuck up"}))
+
+
+app.get('/search', (req, res) => {
+     const q = req.query
+     portal.searchVideo({
+          categories : q.categories,
+          stars: q.stars,
+          search: q.search
+     })
+          .then(result => res.send(result))
+});
+
+// Get Embed Video by ID
+app.get('/embed/:video_id', (req, res) => {
+     portal.getVideoEmbedCode(req.params.video_id)
+          .then(result => {
+               res.send({code : Util.escapeCharacter(result.embed.code)})
+          })
+          .catch(e => res.status(404).send(e))
+});
+
+app.get('/detail/:video_id', (req, res) => {
+     portal.getVideoDetail(req.params.video_id)
+          .then(result => res.send(result))
+          .catch(e => res.status(404).send(e))
 });
 
 app.listen(port, () => {

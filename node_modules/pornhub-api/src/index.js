@@ -1,0 +1,6 @@
+const Pornhub = {
+	Videos: require(`${__dirname}/Videos.js`),
+	Lists: require(`${__dirname}/Lists.js`)
+}
+
+module.exports = Pornhub

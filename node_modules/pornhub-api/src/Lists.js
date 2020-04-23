@@ -1,0 +1,63 @@
+const snekfetch = require("snekfetch")
+
+class Lists{
+	/**
+	 * Create a new List API wrapper
+	 */
+	constructor(){
+		this._baseURL = "http://www.pornhub.com/webmasters"
+	}
+
+	/**
+	 * Sends the request and returns a promise
+	 * @function
+	 * @param {string} url - The URL to send the request to
+	 */
+	sendRequest(url){
+		return new Promise((resolve, reject) => {
+			snekfetch.get(searchURL).then(response => {
+				const parsed = JSON.parse(response.text)
+				resolve(parsed)
+			})
+		})
+	}
+
+	/**
+	 * Retrieves all available categories.
+	 * @function
+	 * @returns {Promise.<Object>}
+	 */
+	getCategoriesList(){
+		return sendRequest(`${this._baseURL}/categories`)
+	}
+
+	/**
+	 * Retrieves all available tags.
+	 * @function
+	 * @parameter {string|number} list - A to Z for tag starting letter, 0 for other
+	 * @returns {Promise.<Object>}
+	 */
+	getCategoriesList(list=0){
+		return sendRequest(`${this._baseURL}/tags?list=${list}`)
+	}
+
+	/**
+	 * Retrieves all available pornstars.
+	 * @function
+	 * @returns {Promise.<Object>}
+	 */
+	getStarList(){
+		return sendRequest(`${this._baseURL}/stars`)
+	}
+
+	/**
+	 * Retrieves all available pornstars with details (page url and star's thumb).
+	 * @function
+	 * @returns {Promise.<Object>}
+	 */
+	getStarDetailedList(){
+		return sendRequest(`${this._baseURL}/stars_detailed`)
+	}
+}
+
+module.exports = Lists
