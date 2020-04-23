@@ -20,6 +20,10 @@ class PornHub {
                url += `search=${query.search}`
           }
 
+          if(typeof query.page === 'number'){
+               url += `&page=${query.page}`
+          }
+
           if(typeof query.thumbsize === 'string'){
                url += `&thumbsize=${query.thumbsize}`
           }

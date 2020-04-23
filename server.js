@@ -1,25 +1,24 @@
 const express = require('express')
 const PornHub = require('./modules/Pornhub')
 const Util = require('./modules/Util')
-
+const pornhub = require('pornnhub')
 const app = express()
 const portal = new PornHub();
 const port = process.env.PORT || 1338
+const ug = 'https://www.pornhub.com/view_video.php?viewkey=ph56fc59c124c0c';
 
-const pornhub = require('./modules/pornhub')
+const pornstars = require('./modules/pornstars')
 
 app.get('/pornstars/:page', (req, res) => {
      let page = req.params.page || 1
      
-     pornhub(page)
+     pornstars(page)
           .then(result => res.send({
                page : page,
                data: result
           }))
           .catch(e => console.log(e))
 });
-
-
 
 app.get('/search', (req, res) => {
      const q = req.query
@@ -46,6 +45,15 @@ app.get('/detail/:video_id', (req, res) => {
           .catch(e => res.status(404).send(e))
 });
 
+
+app.get('*', (req, res) => {
+     res.status(404).send({
+          message : "Get the fuck out"
+     });
+});
+
 app.listen(port, () => {
      console.log(`Server started on port ${port}`);
 });
+
+// http://ec2-54-169-219-236.ap-southeast-1.compute.amazonaws.com:1338/search?search=miakhalifa
