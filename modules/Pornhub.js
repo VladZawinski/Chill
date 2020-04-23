@@ -20,7 +20,7 @@ class PornHub {
                url += `search=${query.search}`
           }
 
-          if(typeof query.page === 'number'){
+          if(typeof query.page === 'string'){
                url += `&page=${query.page}`
           }
 

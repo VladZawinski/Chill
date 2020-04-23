@@ -1,11 +1,11 @@
 const express = require('express')
 const PornHub = require('./modules/Pornhub')
 const Util = require('./modules/Util')
-const pornhub = require('pornnhub')
 const app = express()
+
+
 const portal = new PornHub();
 const port = process.env.PORT || 1338
-const ug = 'https://www.pornhub.com/view_video.php?viewkey=ph56fc59c124c0c';
 
 const pornstars = require('./modules/pornstars')
 
@@ -22,12 +22,15 @@ app.get('/pornstars/:page', (req, res) => {
 
 app.get('/search', (req, res) => {
      const q = req.query
+     console.log(q.page);
+     
      portal.searchVideo({
           categories : q.categories,
           stars: q.stars,
-          search: q.search
+          search: q.search,
+          page : q.page
      })
-          .then(result => res.send(result))
+     .then(result => res.send(result))
 });
 
 // Get Embed Video by ID
@@ -56,4 +59,3 @@ app.listen(port, () => {
      console.log(`Server started on port ${port}`);
 });
 
-// http://ec2-54-169-219-236.ap-southeast-1.compute.amazonaws.com:1338/search?search=miakhalifa
