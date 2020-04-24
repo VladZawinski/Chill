@@ -2,8 +2,7 @@ const express = require('express')
 const PornHub = require('./modules/Pornhub')
 const Util = require('./modules/Util')
 const app = express()
-
-
+const cheerio = require('cheerio')
 const portal = new PornHub();
 const port = process.env.PORT || 1338
 
@@ -55,9 +54,16 @@ app.get('/search', (req, res) => {
 
 // Get Embed Video by ID
 app.get('/embed/:video_id', (req, res) => {
+     let width = req.query.width;
+     let height = req.query.height
+
      portal.getVideoEmbedCode(req.params.video_id)
           .then(result => {
-               res.send({code : Util.escapeCharacter(result.embed.code)})
+               const stringHtml = Util.escapeCharacter(result.embed.code);
+               
+               const viewPortHtml = Util.modifyWidthAndHeight(stringHtml,width,height)
+               
+               res.send({code : viewPortHtml})
           })
           .catch(e => res.status(404).send(e))
 });
