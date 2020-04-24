@@ -46,7 +46,9 @@ app.get('/search', (req, res) => {
                     segment: video.segment
                })
           });
-          res.status(200).send(reduce);
+          res.status(200).send({
+               videos : reduce
+          });
      })
      .catch(e => res.status(500).send({message : "Something went wrong"}))
 });
