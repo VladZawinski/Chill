@@ -44,9 +44,6 @@ const fetchPornstars = function(page){
      });
 }
 
-const fetchVideosByCategory = function(query){
-     
-}
 
 function createUrlWithPage(page) {
      return `${url}?page=${page}`

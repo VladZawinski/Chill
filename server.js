@@ -22,7 +22,6 @@ app.get('/pornstars/:page', (req, res) => {
 
 app.get('/search', (req, res) => {
      const q = req.query
-     console.log(q.page);
      
      portal.searchVideo({
           categories : q.categories,
@@ -30,7 +29,26 @@ app.get('/search', (req, res) => {
           search: q.search,
           page : q.page
      })
-     .then(result => res.send(result))
+     .then(result => {
+          const reduce = []
+          result.videos.forEach(video => {
+               reduce.push({
+                    video_id : video.video_id,
+                    views : video.views,
+                    duration : video.duration,
+                    ratings: video.ratings,
+                    rating : video.rating,
+                    title : video.title,
+                    url : video.url,
+                    default_thumb :video.default_thumb,
+                    thumb : video.thumb,
+                    publish_date: video.publish_date,
+                    segment: video.segment
+               })
+          });
+          res.status(200).send(reduce);
+     })
+     .catch(e => res.status(500).send({message : "Something went wrong"}))
 });
 
 // Get Embed Video by ID

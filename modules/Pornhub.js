@@ -32,7 +32,6 @@ class PornHub {
      }
 
      sendRequest(url){
-          console.log(url);
           
           return new Promise((resolve,reject) => {
                fetch(url)
