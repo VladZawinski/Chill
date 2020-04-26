@@ -33,10 +33,9 @@ app.get('/search', (req, res) => {
      const q = req.query
      
      portal.searchVideo({
-          categories : q.categories,
-          stars: q.stars,
           search: q.search,
-          page : q.page
+          page : q.page,
+          thumbsize : q.thumbsize
      })
      .then(result => {
           const reduce = []

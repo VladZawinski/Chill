@@ -8,14 +8,6 @@ class PornHub {
      prepareSearchUrl(query) {
           let url = `${this.base_url}/search?`;
 
-          if(typeof query.categories === 'string'){
-               url += `categories=${query.categories}`
-          }
-
-          if(typeof query.star === 'string'){
-               url += `stars=${query.stars}`
-          }
-
           if(typeof query.search === 'string'){
                url += `search=${query.search}`
           }
