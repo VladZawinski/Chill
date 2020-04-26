@@ -11,7 +11,7 @@ const starsAndCate = require('./modules/starsandcate')
 app.get('/pornstars/:page', (req, res) => {
      let page = req.params.page || 1
      
-     pornstars(page)
+     starsAndCate.fetchPornstars(page)
           .then(result => res.send({
                page : page,
                data: result
