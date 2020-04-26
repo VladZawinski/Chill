@@ -6,7 +6,7 @@ const cheerio = require('cheerio')
 const portal = new PornHub();
 const port = process.env.PORT || 1338
 
-const pornstars = require('./modules/pornstars')
+const starsAndCate = require('./modules/starsandcate')
 
 app.get('/pornstars/:page', (req, res) => {
      let page = req.params.page || 1
@@ -15,6 +15,16 @@ app.get('/pornstars/:page', (req, res) => {
           .then(result => res.send({
                page : page,
                data: result
+          }))
+          .catch(e => console.log(e))
+});
+
+
+app.get('/categories', (req, res) => {
+     starsAndCate.fetchCategories()
+          .then(result => res.status(200).send({
+               page : 1,
+               categories : result
           }))
           .catch(e => console.log(e))
 });
